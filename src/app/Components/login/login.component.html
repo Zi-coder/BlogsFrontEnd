@@ -1,0 +1,35 @@
+<div class="box text-center">
+  <h2>Login</h2>
+  <div class="details text-left">
+    <form>
+
+      <label>Username</label><br>
+      <label class="sr-only">Username</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></div>
+        </div>
+        <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="username">
+      </div>
+      <label>Password</label><br>
+      <label class="sr-only">Password</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-lock" aria-hidden="true"></i></div>
+        </div>
+        <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="password">
+      </div>
+      <div class="text-center mt-5">
+        <button class="btn btn-success" (click)="login()">Login</button>
+      </div>
+
+    </form>
+    <hr>
+    <br>
+    <h6>New Here?</h6>
+    <br>
+    <div class="input-group-prepend">
+      <div class="input-group-text"><i class="fa fa-user-plus" aria-hidden="true"></i></div><button [routerLink]="['/sign-up']" routerLinkActive="router-link-active"  class="btn-warning btn">Register Now</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div *ngIf="user">
+<div class="container mt-5">
+    <div class="row justify-content-between">
+      <div class=" col-6">
+        <img class="img-fluid img-thumbnail" src="{{user.photo}}" alt="PROFILE">
+      </div>
+      <div class="">
+        
+        <h1 class="text-uppercase">{{user.fullname}}</h1>
+        <h3>Contact: {{ user.contact }}</h3>
+      </div>
+      </div>
+      <div class="mt-5 mb-5">
+        <h2>BIO</h2>
+              {{ user.bio }}
+              <br>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique dignissimos, unde ullam iste error officiis corrupti ex sequi quaerat voluptatum itaque nesciunt magni quos ducimus assumenda nam. Suscipit, sunt magnam!
+            
+      </div>
+      <button class="btn btn-outline-success text-uppercase" [routerLink]="['/edit-profile']" routerLinkActive="router-link-active" >Edit Details</button>
+</div>

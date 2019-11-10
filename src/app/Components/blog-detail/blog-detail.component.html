@@ -1,0 +1,17 @@
+<div class="container">
+    <div  class="details">
+            
+            
+        <section class="blog-top">
+            <div>{{ blog.date.substr(0,10) }}</div>
+            <img src="{{ blog.photo }}">
+            <div>{{ blog.fullname }}</div>
+            
+        </section>
+      
+      <hr>
+      {{ blog.topic }}
+      <hr>
+  <span class="details mb-3"> {{ blog.content }} </span>    
+</div>
+</div>

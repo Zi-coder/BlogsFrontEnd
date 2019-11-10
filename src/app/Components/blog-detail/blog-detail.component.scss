@@ -1,0 +1,19 @@
+.details{
+    width: 100%;
+    min-width: 100%;
+}
+.blog{
+    border: 2px solid black;
+    border-radius: 10px;
+    color: black;
+    padding: 3%;
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+    max-height: 8%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.blog-top{
+    justify-content: space-evenly;
+    display: flex;
+}
