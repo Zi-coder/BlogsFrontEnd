@@ -1,0 +1,34 @@
+<div *ngIf="user">
+  <div class="container mt-5">
+    <div class="row justify-content-between">
+      <div class=" col-6">
+        <img class="img-fluid img-thumbnail" src="{{user.photo}}" alt="PROFILE">
+      </div>
+      <div class="">
+
+        <h1 class="text-uppercase">{{user.fullname}}</h1>
+        <h3>Contact: {{ user.contact }}</h3>
+      </div>
+    </div>
+    <div class="mt-5 mb-5">
+      <h2>BIO</h2>
+      {{ user.bio }}
+      <br>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique dignissimos, unde ullam iste error officiis
+      corrupti ex sequi quaerat voluptatum itaque nesciunt magni quos ducimus assumenda nam. Suscipit, sunt magnam!
+
+    </div>
+  </div>
+  <hr>
+  <h4 class="mt-5">Some Blogs of {{ user.fullname }}</h4>
+  <div class="m-4" *ngFor="let blog of blogs">
+        
+    <div class="card">
+          <div class="card-body details" (click)="goToDetails(blog.id,checkFollow(blog.creator.id))">
+            Category: #<span style="color:darkgray;">{{ blog.category }}</span>
+            <h4 class="card-title">{{ blog.topic }}</h4>
+            <p class="card-text"> {{ blog.content }} </p>
+          </div>
+      </div>
+</div>
+  </div>

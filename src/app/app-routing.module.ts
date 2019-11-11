@@ -7,6 +7,7 @@ import { BlogDetailComponent } from './Components/blog-detail/blog-detail.compon
 import { ProfileComponent } from './Components/profile/profile.component';
 import { EditProfileComponent } from './Components/edit-profile/edit-profile.component';
 import { CreateBlogComponent } from './Components/create-blog/create-blog.component';
+import { GeneralBioComponent } from './Components/general-bio/general-bio.component';
 const routes: Routes = [
   {
     path:'',
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path:'create',
     component:CreateBlogComponent
+  },
+  {
+    path:'gen-bio',
+    component:GeneralBioComponent
   }
 ];
 

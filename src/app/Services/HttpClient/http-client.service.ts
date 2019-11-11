@@ -15,16 +15,12 @@ export class HttpClientService {
   currentUser() {
     return this.httpClient.get(this.baseUrl + "/user/current");
   }
-
-  //dataTransfer
-  sendData(data) {
-    this.data = data;
-  }
-  getData() {
-    return this.data;
-  }
   editUserDetails(user) {
     return this.httpClient.post(this.baseUrl + "/user/editDetails", user);
+  }
+
+  getGeneralBio(id){
+    return this.httpClient.get(this.baseUrl+"/user/gen-bio/"+id);
   }
 
   //Blog Services
@@ -37,9 +33,24 @@ export class HttpClientService {
   fetchPrivateBlogs() {
     return this.httpClient.get(this.baseUrl + "/blog/privateBlogs");
   }
-
+  fetchPublicBlogsByCreator(id){
+    return this.httpClient.get(this.baseUrl+"/blog/creator/"+id);
+  }
   getBlogDetail(id) {
     return this.httpClient.get(this.baseUrl + "/blog/details/" + id);
+  }
+  fetchCurrentUserBlogs(){
+    return this.httpClient.get(this.baseUrl+"/blog/current");
+  }
+  deleteBlog(id){
+    return this.httpClient.delete(this.baseUrl+"/blog/delete/"+id);
+  }
+
+  fetchPrivateByCategory(category){
+    return this.httpClient.get(this.baseUrl + "/blog/private/"+category);
+  }
+  fetchPublicByCategory(category){
+    return this.httpClient.get(this.baseUrl + "/blog/public/"+category);
   }
   //BlogMEtaDATA
 

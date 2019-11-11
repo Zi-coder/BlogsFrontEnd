@@ -12,7 +12,7 @@ export class CreateBlogComponent implements OnInit {
     // pr:"false",
     topic : "",
     content: "",
-    pr: "false",
+    pr: "true",
     category:""
   };
   constructor(private httpService:HttpClientService,private router:Router) { }

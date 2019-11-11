@@ -13,6 +13,7 @@ import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
 import { BlogDetailComponent } from './Components/blog-detail/blog-detail.component';
 import { EditProfileComponent } from './Components/edit-profile/edit-profile.component';
 import { CreateBlogComponent } from './Components/create-blog/create-blog.component';
+import { GeneralBioComponent } from './Components/general-bio/general-bio.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { CreateBlogComponent } from './Components/create-blog/create-blog.compon
     NavBarComponent,
     BlogDetailComponent,
     EditProfileComponent,
-    CreateBlogComponent
+    CreateBlogComponent,
+    GeneralBioComponent
   ],
   imports: [
     BrowserModule,

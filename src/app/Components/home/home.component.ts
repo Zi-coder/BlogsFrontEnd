@@ -16,24 +16,37 @@ export class HomeComponent implements OnInit {
   privateBlogs;
   following;
   followingLength;
-
+  empty: Boolean = true;
   testCount;
   ngOnInit() {
-    
-    
     this.fetchBlogs();
-    this.fetchPrivateBlogs();
+   // this.fetchPrivateBlogs();
     this.fetchFollowing();
     this.display = this.auth.isUserLoggedIn();
     if(!this.display){
       this.router.navigate(['/login']);
     }
   }
-  
+  filter(category){
+    this.empty = true;
+    this.httpClient.fetchPrivateByCategory(category).subscribe(
+      (resp)=>{this.privateBlogs = resp;
+        this.httpClient.fetchPublicByCategory(category).subscribe(
+          (resp)=>{
+            this.blogs = resp;
+            if(this.privateBlogs.length != 0 || this.blogs.length != 0)
+            this.empty = false;
+          }
+        )
+      }
+    )
+    
+  }
   fetchBlogs(){
+    this.empty = true;
     this.httpClient.fetchBlogs().subscribe(
       (resp) => {this.blogs = resp;
-      
+      this.fetchPrivateBlogs();
       },(error)=> console.log(error)
     )
   }
@@ -41,6 +54,8 @@ export class HomeComponent implements OnInit {
     this.httpClient.fetchPrivateBlogs().subscribe(
       (resp)=>{
         this.privateBlogs = resp;
+        if(this.privateBlogs.length != 0 || this.blogs.length != 0)
+            this.empty = false;
       }
       ,
       (error) => console.log(error)
@@ -91,6 +106,13 @@ export class HomeComponent implements OnInit {
         id: id,
         follow: follow 
       }
+    });
+  }
+  userProfile(id){
+    this.router.navigate(['/gen-bio'],{
+      queryParams:{
+        id:id
+      } 
     });
   }
 }

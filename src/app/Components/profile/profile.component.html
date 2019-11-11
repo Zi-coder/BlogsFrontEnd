@@ -18,4 +18,19 @@
             
       </div>
       <button class="btn btn-outline-success text-uppercase" [routerLink]="['/edit-profile']" routerLinkActive="router-link-active" >Edit Details</button>
-</div>
+    </div>
+     
+      <div class="container" *ngIf="user">
+        <div class="m-4" *ngFor="let blog of blogs">
+        
+          <div class="card">
+              <button class="btn btn-danger" (click)="deleteBlog(blog.id)" >Delete</button>
+                <div class="card-body details" (click)="goToDetails(blog.id,checkFollow(blog.creator.id))">
+                  Category: #<span style="color:darkgray;">{{ blog.category }}</span>
+                  <h4 class="card-title">{{ blog.topic }}</h4>
+                  <p class="card-text"> {{ blog.content }} </p>
+                </div>
+            </div>
+      </div>
+      </div>
+
