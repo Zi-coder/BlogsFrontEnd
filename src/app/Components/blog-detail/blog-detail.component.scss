@@ -1,19 +1,28 @@
-.details{
-    width: 100%;
-    min-width: 100%;
+.details {
+  width: 100%;
+  min-width: 100%;
 }
-.blog{
-    border: 2px solid black;
-    border-radius: 10px;
-    color: black;
-    padding: 3%;
-    background-color: white;
-    font-family: 'Roboto', sans-serif;
-    max-height: 8%;
-    text-overflow: ellipsis;
-    overflow: hidden;
+.blog {
+  border: 2px solid black;
+  border-radius: 10px;
+  color: black;
+  padding: 3%;
+  background-color: white;
+  font-family: "Roboto", sans-serif;
 }
-.blog-top{
-    justify-content: space-evenly;
-    display: flex;
+.blog-top {
+  justify-content: space-between;
+  display: flex;
+  // overflow: auto;
+  // float: left;
+}
+.comment {
+  margin-left: 2%;
+  background-color: white;
+}
+.likeClass {
+  color: blue;
+}
+.pointer {
+  cursor: pointer;
 }

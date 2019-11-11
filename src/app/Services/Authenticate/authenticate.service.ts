@@ -1,39 +1,35 @@
-import { Injectable } from '@angular/core';
-import { HttpClient ,HttpHeaders} from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { map } from "rxjs/operators";
+import { Router } from "@angular/router";
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthenticateService {
+  constructor(private HttpClient: HttpClient, private router: Router) {}
 
-  constructor(private HttpClient: HttpClient,private router:Router) { }
-
-  authenticate(username,password) {
+  authenticate(username, password) {
     const headers = new HttpHeaders({
-    Authorization: 'Basic ' + btoa(username + ':' + password)
+      Authorization: "Basic " + btoa(username + ":" + password)
     });
-    return this.HttpClient.get('http://localhost:8080/user/auth ', {
+    return this.HttpClient.get("http://localhost:8080/user/auth ", {
       headers
     }).pipe(
-      map(
-        userData => {
-          sessionStorage.setItem('Token', 'Basic ' + btoa(username + ':' + password));
-        }
-      )
+      map(userData => {
+        sessionStorage.setItem(
+          "Token",
+          "Basic " + btoa(username + ":" + password)
+        );
+        sessionStorage.setItem("username", username);
+      })
     );
   }
-  isUserLoggedIn(){
-    if(sessionStorage.getItem("Token") != null)
-    return true;
-    else
-    return false;
+  isUserLoggedIn() {
+    if (sessionStorage.getItem("Token") != null) return true;
+    else return false;
   }
-  logOut(){
+  logOut() {
     sessionStorage.clear();
-    this.router.navigate(['login']);
-    
+    this.router.navigate(["login"]);
   }
-
-
 }

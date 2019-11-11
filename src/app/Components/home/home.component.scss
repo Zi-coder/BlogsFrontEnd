@@ -15,6 +15,8 @@
     overflow: hidden;
 }
 .blog-top{
-    justify-content: space-evenly;
+    justify-content: space-between;
     display: flex;
+    // overflow: auto;
+    // float: left;
 }

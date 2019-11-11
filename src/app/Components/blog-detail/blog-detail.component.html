@@ -1,17 +1,56 @@
-<div class="container">
-    <div  class="details">
-            
-            
-        <section class="blog-top">
-            <div>{{ blog.date.substr(0,10) }}</div>
-            <img src="{{ blog.photo }}">
-            <div>{{ blog.fullname }}</div>
-            
+<div class="container" *ngIf="blog">
+  <div class="details">
+    <div class="card">
+      <div class="card-header">
+        <section class=" card-header blog-top">
+
+          <div><img style="height: 50px;width: 50px; object-fit: containng;" src="{{ blog.creator.photo }}">
+            {{ blog.creator.fullname }}</div>
+
+          <div>
+            {{blog.date.substr(11,5) + " | " +  blog.date.substr(0,10)   }}
+            <br>
+            <button *ngIf="followCreator == 'false'" (click)="follow(blog.creator.id)" class="btn btn-primary "> <i
+                class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>
+            <button *ngIf="followCreator == 'true'" (click)="unfollow(blog.creator.id)" class="btn btn-danger "> <i
+                class="fa fa-user-plus" aria-hidden="true"></i> UnFollow</button>
+          </div>
         </section>
-      
-      <hr>
-      {{ blog.topic }}
-      <hr>
-  <span class="details mb-3"> {{ blog.content }} </span>    
-</div>
-</div>
+      </div>
+      <div class="card-body details">
+        Category: #<span style="color:darkgray;">{{ blog.category }}</span>
+        <h4 class="card-title">{{ blog.topic }}</h4>
+        <p class="card-text"> {{ blog.content }} </p>
+      </div>
+      <div class="card-footer text-muted">
+        <div class="d-flex justify-content-between">
+          <div><span class="pointer" (click)="likedClicked()" [ngClass]="{likeClass: liked}"> <i class="fa fa-thumbs-up"
+                aria-hidden="true">{{ likes }}<span class="ml-2">Like</span> </i> </span>
+            <span class="pointer" (click)="dislikeClicked()" [ngClass]="{likeClass: disliked}"><i
+                class="ml-3 fa fa-thumbs-down" aria-hidden="true">{{ dislikes }}<span class="ml-2">Dislike</span>
+              </i></span></div>
+          <div>
+            <div class="d-flex form-group">
+              <input type="text" class="form-control" name="comment" aria-describedby="helpId"
+                placeholder="{{blogDetail.comment}}" [(ngModel)]="blogDetail.comment">
+              <button class="ml-2 btn btn-outline-warning" (click)="commentClicked()">Comment</button>
+              <button class="ml-2 btn btn-danger" (click)="deleteResponse()" >Delete</button>
+            </div>
+          </div>
+        </div>
+        <h4>Comments</h4>
+        <div *ngFor="let object of metaData">
+          <div class="m-3" *ngIf="object.comment != null">
+
+            <div> <img src="{{ object.reactor.photo }}" style="height: 25px;width: 25px;" alt="User">
+              <h6>{{ object.reactor.fullname }}</h6>
+            </div>
+            <div class="comment">
+              <h6> {{ object.comment }} </h6>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>

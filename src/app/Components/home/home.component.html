@@ -1,32 +1,88 @@
-<div class="container-fluid pl-5 pr-5 main" >
+
+
+<div class="container-fluid pl-5 pr-5 main" *ngIf="display" >
   <div class="row">
-      <div class="col-2">
+      <div class="col-3">
           Following
-          <section *ngFor="let blog of blogs">
-              <img src="{{ blog.photo }}">
-              <span class="details">{{ blog.fullname }}</span>
+          <section *ngFor="let user of following">
+              <div class="m-3">
+                <img style="height: 50px;width:50px" src="{{ user.following.photo }}" class="rounded-circle bg-dark">
+                <span class="details ml-2">{{ user.following.fullname }}</span>
+              </div>
+              
           </section>
         </div>
     <div class="col">
       Blogs
-      <div class="container-fluid d-flex blog mt-3 mb-3" *ngFor="let blog of blogs">
+
+      <div>
+          <h4>Private Blogs from Creators You Follow</h4>
+          <div>
+              <div class="m-4" *ngFor="let blog of privateBlogs">
         
-        <div (click)="sendData(blog)" class="details">
-            
-            
-                  <section class="blog-top">
-                      <div>{{ blog.date.substr(0,10) }}</div>
-                      <img style="height: 50px;width: 50px; object-fit: containng;" src="{{ blog.creater.photo }}">
-                      <div>{{ blog.creater.fullname }}</div>
-                      
-                  </section>
-                
-                <hr>
-                {{ blog.topic }}
-                <hr>
-            <span class="details mb-3"> {{ blog.content }} </span>    
+                  <div class="card">
+                        <div class="card-header">
+                            <section class=" card-header blog-top">
+                               
+                                <div><img style="height: 50px;width: 50px; object-fit: containng;" src="{{ blog.creator.photo }}"> {{ blog.creator.fullname }}</div>
+                                 
+                                  <div>
+                                      {{blog.date.substr(11,5) + " | " +  blog.date.substr(0,10)   }}
+                                      <br>
+                          <button *ngIf="!checkFollow(blog.creator.id)" (click)="follow(blog.creator.id)"  class="btn btn-primary "> <i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>
+                          <button *ngIf="checkFollow(blog.creator.id)" (click)="unfollow(blog.creator.id)"  class="btn btn-danger "> <i class="fa fa-user-plus" aria-hidden="true"></i> UnFollow</button>
+                                    </div>
+                              </section>
+                        </div>
+                        <div class="card-body details" (click)="goToDetails(blog.id,checkFollow(blog.creator.id))">
+                          Category: #<span style="color:darkgray;">{{ blog.category }}</span>
+                          <h4 class="card-title">{{ blog.topic }}</h4>
+                          <p class="card-text"> {{ blog.content }} </p>
+                        </div>
+                        <!-- <div class="card-footer text-muted">
+                          <i class="fa fa-thumbs-up" aria-hidden="true">Like</i>
+                          <i class="ml-3 fa fa-thumbs-down" aria-hidden="true">Dislike</i>
+                        </div> -->
+                      </div>
+              </div>
+          </div>
+        <div>
+
         </div>
-    </div>
+      </div>
+
+
+      <div>
+        <h4>Public Blogs</h4>
+        <div class="m-4" *ngFor="let blog of blogs">
+        
+          <div class="card">
+                <div class="card-header">
+                    <section class=" card-header blog-top">
+                       
+                        <div><img style="height: 50px;width: 50px; object-fit: containng;" src="{{ blog.creator.photo }}"> {{ blog.creator.fullname }}</div>
+                         
+                          <div>
+                              {{blog.date.substr(11,5) + " | " +  blog.date.substr(0,10)   }}
+                              <br>
+                          <button *ngIf="!checkFollow(blog.creator.id)" (click)="follow(blog.creator.id)"  class="btn btn-primary "> <i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>
+                          <button *ngIf="checkFollow(blog.creator.id)" (click)="unfollow(blog.creator.id)"  class="btn btn-danger "> <i class="fa fa-user-plus" aria-hidden="true"></i> UnFollow</button>
+                            </div>
+                      </section>
+                </div>
+                <div class="card-body details" (click)="goToDetails(blog.id,checkFollow(blog.creator.id))">
+                  Category: #<span style="color:darkgray;">{{ blog.category }}</span>
+                  <h4 class="card-title">{{ blog.topic }}</h4>
+                  <p class="card-text"> {{ blog.content }} </p>
+                </div>
+                <!-- <div class="card-footer text-muted">
+                  <i class="fa fa-thumbs-up" aria-hidden="true">Like</i>
+                  <i class="ml-3 fa fa-thumbs-down" aria-hidden="true">Dislike</i>
+                </div> -->
+              </div>
+      </div>
+      </div>
+     
     </div>
    
   </div>

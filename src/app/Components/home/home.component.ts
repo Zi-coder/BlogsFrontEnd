@@ -11,22 +11,86 @@ import { HttpClientService } from 'src/app/Services/HttpClient/http-client.servi
 export class HomeComponent implements OnInit {
 
   constructor(private auth: AuthenticateService,private router:Router,private httpClient: HttpClientService) { }
-  display: Boolean;
+  display: Boolean = false;
   blogs;
+  privateBlogs;
+  following;
+  followingLength;
+
+  testCount;
   ngOnInit() {
+    
+    
+    this.fetchBlogs();
+    this.fetchPrivateBlogs();
+    this.fetchFollowing();
     this.display = this.auth.isUserLoggedIn();
     if(!this.display){
       this.router.navigate(['/login']);
     }
-    this.fetchBlogs();
   }
-  sendData(data){
-    this.httpClient.sendData(data);
-    this.router.navigate(['blog-detail']);
-  }
+  
   fetchBlogs(){
     this.httpClient.fetchBlogs().subscribe(
-      (resp) => this.blogs = resp,(error)=> console.log(error)
+      (resp) => {this.blogs = resp;
+      
+      },(error)=> console.log(error)
     )
+  }
+  fetchPrivateBlogs(){
+    this.httpClient.fetchPrivateBlogs().subscribe(
+      (resp)=>{
+        this.privateBlogs = resp;
+      }
+      ,
+      (error) => console.log(error)
+      
+    )
+  }
+  fetchFollowing(){
+    this.httpClient.fetchFollowing().subscribe(
+      (resp)=>{
+        this.following = resp;
+        this.followingLength = this.following.length;
+      },
+      (error)=>console.error(error)
+    )
+  }
+  checkFollow(id){
+    if(this.following){
+      for(let i =0; i < this.following.length ;i++){
+        if(id == this.following[i].following.id)
+        {
+          
+          return true;
+        }
+      }
+      return false;
+    }
+    
+  }
+  follow(id){
+    this.httpClient.follow(id).subscribe(
+      (resp)=>{
+        alert(resp);
+        this.ngOnInit();
+      }
+    )
+  }
+  unfollow(id){
+    this.httpClient.unfollow(id).subscribe(
+      (resp)=>{
+        alert(resp);
+        this.ngOnInit();
+      }
+    )
+  }
+  goToDetails(id,follow) {
+    this.router.navigate(['/blog-detail'], {
+      queryParams: {
+        id: id,
+        follow: follow 
+      }
+    });
   }
 }
