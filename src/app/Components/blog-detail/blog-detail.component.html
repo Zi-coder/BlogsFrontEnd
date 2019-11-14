@@ -12,8 +12,9 @@
             <br>
             <button *ngIf="followCreator == 'false'" (click)="follow(blog.creator.id)" class="btn btn-primary "> <i
                 class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>
-            <button *ngIf="followCreator == 'true'" (click)="unfollow(blog.creator.id)" class="btn btn-danger "> <i
-                class="fa fa-user-plus" aria-hidden="true"></i> UnFollow</button>
+            <button *ngIf="followCreator == 'true'" (click)="unfollow(blog.creator.id)" class="btn btn-danger "> 
+             <span class="badge badge-danger"> <i class="fa fa-user-times" aria-hidden="true"></i> UnFollow</span>
+            </button>
           </div>
         </section>
       </div>
@@ -33,12 +34,17 @@
             <div class="d-flex form-group">
               <input type="text" class="form-control" name="comment" aria-describedby="helpId"
                 placeholder="{{blogDetail.comment}}" [(ngModel)]="blogDetail.comment">
-              <button class="ml-2 btn btn-outline-warning" (click)="commentClicked()">Comment</button>
-              <button class="ml-2 btn btn-danger" (click)="deleteResponse()" >Delete</button>
+
+              <button class="ml-2 btn btn-warning" (click)="commentClicked()">
+                <span class="badge badge-warning"> <i class="fa fa-comment" aria-hidden="true"></i> Comment</span>
+              </button>
+              <button class="ml-2 btn btn-danger" (click)="deleteResponse()">
+                <span class="badge badge-danger"> <i class="fa fa-crosshairs" aria-hidden="true"></i> Delete</span>
+              </button>
             </div>
           </div>
         </div>
-        <h4>Comments</h4>
+        <h4> <i class="fa fa-comments" aria-hidden="true"></i> Comments</h4>
         <div *ngFor="let object of metaData">
           <div class="m-3" *ngIf="object.comment != null">
 

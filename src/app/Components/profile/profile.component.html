@@ -1,36 +1,82 @@
 <div *ngIf="user">
-<div class="container mt-5">
-    <div class="row justify-content-between">
-      <div class=" col-6">
-        <img class="img-fluid img-thumbnail" src="{{user.photo}}" alt="PROFILE">
+  <div class="row">
+    <div class="col-2">
+      <div class="container mt-5">
+        <h4>Followers</h4>
       </div>
-      <div class="">
+      <div *ngIf="!followers">
+        <span ><h5 class="ml-3 mt-5"> Nill </h5></span>
         
-        <h1 class="text-uppercase">{{user.fullname}}</h1>
-        <h3>Contact: {{ user.contact }}</h3>
       </div>
-      </div>
-      <div class="mt-5 mb-5">
-        <h2>BIO</h2>
-              {{ user.bio }}
-              <br>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique dignissimos, unde ullam iste error officiis corrupti ex sequi quaerat voluptatum itaque nesciunt magni quos ducimus assumenda nam. Suscipit, sunt magnam!
-            
-      </div>
-      <button class="btn btn-outline-success text-uppercase" [routerLink]="['/edit-profile']" routerLinkActive="router-link-active" >Edit Details</button>
-    </div>
-     
-      <div class="container" *ngIf="user">
-        <div class="m-4" *ngFor="let blog of blogs">
-        
-          <div class="card">
-              <button class="btn btn-danger" (click)="deleteBlog(blog.id)" >Delete</button>
-                <div class="card-body details" (click)="goToDetails(blog.id,checkFollow(blog.creator.id))">
-                  Category: #<span style="color:darkgray;">{{ blog.category }}</span>
-                  <h4 class="card-title">{{ blog.topic }}</h4>
-                  <p class="card-text"> {{ blog.content }} </p>
-                </div>
+      <div *ngFor="let follower of followers">
+        <div class="justify-content-between d-flex ml-3">
+            <section (click)="genBio(follower.user.id)" class="pointer">
+                <img src="{{follower.user.photo}}" class="rounded-circle" height="50px" width="50px" alt="follower.fullname">
+                <span class="ml-2"> {{ follower.user.fullname }} </span>
+            </section>
+            <div>
+              <button type="button" class="btn btn-primary" (click)="removeFollower(follower.user.id)">Remove</button>
             </div>
-      </div>
+        </div>
+        
+        
       </div>
 
+    </div>
+    <div class="col">
+
+
+      <div class="container mt-5">
+        <div class="row justify-content-between">
+          <div class=" col-6">
+            <img class="img-fluid img-thumbnail" src="{{user.photo}}" alt="PROFILE">
+          </div>
+          <div class="">
+
+            <h1 class="text-uppercase">{{user.fullname}}</h1>
+            <h3>Contact: {{ user.contact }}</h3>
+            <span class="badge badge-pill badge-primary">Followers: {{ cFollower }}</span>
+            
+            <span class="badge badge-pill badge-success ml-3">Following: {{ cFollowing }}</span>
+
+          </div>
+        </div>
+        <div class="mt-5 mb-5">
+          <h2>BIO</h2>
+          {{ user.bio }}
+          <br>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique dignissimos, unde ullam iste error
+          officiis corrupti ex sequi quaerat voluptatum itaque nesciunt magni quos ducimus assumenda nam. Suscipit, sunt
+          magnam!
+
+        </div>
+        <button class="btn btn-outline-success text-uppercase" [routerLink]="['/edit-profile']"
+          routerLinkActive="router-link-active">Edit Details</button>
+      </div>
+
+      <div class="container" *ngIf="user">
+        <div class="m-4" *ngFor="let blog of blogs">
+
+          <div class="card blog">
+            <div class="btn btn-success" *ngIf="blog.pr == 'false'">
+              <span class="badge badge-success">Public</span>
+            </div>
+            <div class="btn btn-danger" *ngIf="blog.pr == 'true'">
+              <span class="badge badge-danger">Private</span>
+            </div>
+            <div class="card-body details" (click)="goToDetails(blog.id,checkFollow(blog.creator.id))">
+              Category: #<span style="color:darkgray;">{{ blog.category }}</span>
+              <h4 class="card-title">{{ blog.topic }}</h4>
+              <p class="card-text"> {{ blog.content }} </p>
+            </div>
+            <div class="w-100 d-flex justify-content-between p-3">
+              <button class="btn btn-secondary" (click)="editBlog(blog.id)">Edit</button>
+              <button class="btn btn-danger" (click)="deleteBlog(blog.id)">Delete</button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

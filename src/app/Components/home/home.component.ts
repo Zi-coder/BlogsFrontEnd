@@ -18,7 +18,13 @@ export class HomeComponent implements OnInit {
   followingLength;
   empty: Boolean = true;
   testCount;
+  query={
+    criteria:"",
+    query:""
+  }
+  users: any = false;
   ngOnInit() {
+    this.users = false;
     this.fetchBlogs();
    // this.fetchPrivateBlogs();
     this.fetchFollowing();
@@ -41,6 +47,42 @@ export class HomeComponent implements OnInit {
       }
     )
     
+  }
+  filterUser(user){
+    if(user.username != sessionStorage.getItem('username'))
+    return user;
+  }
+  search(){
+    this.empty = true;
+    if(this.query.criteria == 'user'){
+      this.httpClient.userQuery(this.query.query).subscribe(
+        resp=>{
+          this.users = resp;
+          this.users = this.users.filter(this.filterUser)
+          //this.empty = false;
+
+        },
+        error=>{
+          console.log(error);
+        }
+        
+      )
+    }
+    if(this.query.criteria == 'blog'){
+      this.httpClient.fetchPrivateBlogByQuery(this.query.query).subscribe(
+        (resp)=>{
+          this.privateBlogs = resp;
+          this.httpClient.fetchPublicBlogByQuery(this.query.query).subscribe(
+            (resp)=>{
+              this.blogs = resp;
+              if(this.privateBlogs.length != 0 || this.blogs.length != 0)
+              this.empty = false;
+            }
+          )
+        }
+      )
+
+    }
   }
   fetchBlogs(){
     this.empty = true;

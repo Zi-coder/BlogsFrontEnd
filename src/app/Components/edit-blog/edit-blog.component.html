@@ -1,0 +1,42 @@
+<div class="container" *ngIf="blog">
+        <div class="form-group">
+          <label for="topic"><i class="fa fa-sticky-note" aria-hidden="true"></i><span class="ml-2"> Topic</span> </label>
+          <input
+            type="text"
+            class="form-control"
+            name="topic"
+            id=""
+            aria-describedby="helpId"
+            placeholder="Topic"
+            [(ngModel)]="blog.topic"
+          />
+          <small id="helpId" class="form-text text-muted"
+            >Try to keep short topic length</small
+          >
+        </div>
+        <div class="input-group-prepend">
+            <label class="input-group-text">Category</label>
+        
+          <select class="custom-select" name="category" [(ngModel)]="blog.category">
+            <option value="other" >Other</option>
+            <option value="health">Health</option>
+            <option value="tech">Tech</option>
+            <option value="food">Food</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="educational">Educational</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label> <i class="fa fa-align-justify" aria-hidden="true"> </i> <span class="ml-2">Blog</span> </label>
+          <textarea class="form-control content" name="content" [(ngModel)]="blog.content"></textarea>
+        </div>
+        <div class="form-group">
+          <i class="fa fa-lock" aria-hidden="true"></i>  Private   <input class=" ml-4 form-check-input position-static" type="checkbox" value="1" aria-label="..." [(ngModel)]="blog.pr">
+        </div>
+        <div class="bottom-btn">
+          <button class="btn btn-outline-success" (click)="edit()">Edit</button>
+          <button class="btn btn-outline-danger" [routerLink]="['/home']" routerLinkActive="router-link-active" >Cancel</button>
+        </div>
+       
+      </div>
+      

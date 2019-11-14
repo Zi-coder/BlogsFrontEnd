@@ -10,6 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 export class GeneralBioComponent implements OnInit {
   user;
   blogs;
+  cFollower: any =  0;
+  cFollowing: any = 0;
   constructor(private http:HttpClientService,private route:ActivatedRoute) { }
 
   ngOnInit() {
@@ -33,9 +35,27 @@ export class GeneralBioComponent implements OnInit {
     this.http.fetchPublicBlogsByCreator(id).subscribe(
       (resp)=>{
         this.blogs = resp;
+        this.countFollower(id);
       
       },(error)=>console.log(error)
       
+    )
+  }
+  countFollower(id){
+    return this.http.countFollowers(id).subscribe(
+      (resp)=>{
+        this.cFollower = resp;
+        this.countFollowing(id);
+      }
+    )
+  }
+  countFollowing(id){
+    return this.http.countFollowing(id).subscribe(
+      (resp)=>{
+        this.cFollowing = resp;
+      
+        
+      }
     )
   }
 }

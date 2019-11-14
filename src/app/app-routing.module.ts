@@ -8,6 +8,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { EditProfileComponent } from './Components/edit-profile/edit-profile.component';
 import { CreateBlogComponent } from './Components/create-blog/create-blog.component';
 import { GeneralBioComponent } from './Components/general-bio/general-bio.component';
+import { EditBlogComponent } from './Components/edit-blog/edit-blog.component';
 const routes: Routes = [
   {
     path:'',
@@ -44,6 +45,10 @@ const routes: Routes = [
   {
     path:'gen-bio',
     component:GeneralBioComponent
+  },
+  {
+    path:'edit-blog',
+    component:EditBlogComponent
   }
 ];
 

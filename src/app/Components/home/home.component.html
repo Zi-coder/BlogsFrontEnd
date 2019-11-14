@@ -37,35 +37,67 @@
 
 
     </div>
-    
-    <div class="col">
-      <h5>Blogs</h5>
-      <div *ngIf="empty">
-          <img class="img-fluid" src="assets/Media/Graphics/empty.gif" alt="No Blogs">
-        <h2>No Relevant Blogs Found</h2>
+
+    <div class="col container">
+      <div class="d-flex  justify-content-between">
+        <h4>Blogs</h4>
+
+        <div class="form-group d-flex">
+          <input type="text" (keydown)="search()"  class="form-control" name="searchQuery" placeholder="Search" [(ngModel)]="query.query">
+          <select class="form-control ml-2" [(ngModel)]="query.criteria">
+            <option selected value="user"> User  </option>
+            <option value="blog">Blog</option>
+          </select>
+          <button class="btn btn-primary ml-2" (click)="search()">
+            <span class="badge badge-primary"> <i class="fa fa-search" aria-hidden="true"></i> Search</span>
+          </button>
+          <button type="button" (click)="ngOnInit()" class="btn btn-outline-danger ml-3">Clear</button>
         </div>
+      </div>
+      <div class="p-3 result" *ngIf="users">
+          <h3>Your Query Results:-</h3>
+          <div *ngIf="users.length == 0">
+            <h5>No User With Name :  {{ query.query }} Found</h5>
+          </div>
+          <div *ngFor="let user of users">
+           <section class="d-flex mt-3 justify-content-between">
+            <img src="{{ user.photo }}" alt="UserImage" style="height: 50px;width: 50px;">
+            <h5>{{ user.fullname }}</h5>
+            <button *ngIf="!checkFollow(user.id)" (click)="follow(user.id)"
+            class="btn btn-primary "> <i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>
+          <button *ngIf="checkFollow(user.id)" (click)="unfollow(user.id)"
+            class="btn btn-danger ">  <span class="badge badge-danger"> <i class="fa fa-user-times" aria-hidden="true"></i> UnFollow</span></button>
+           </section> 
+          </div>
+        </div>
+
+
+      <div *ngIf="empty">
+        <img class="img-fluid" src="assets/Media/Graphics/empty.gif" alt="No Blogs">
+        <h2>No Relevant Blogs Found</h2>
+      </div>
       <div class="content" *ngIf="!empty">
-        
-      <div>
+
+        <div>
           <h4>Private Blogs from Creators You Follow</h4>
           <div>
             <div class="m-4" *ngFor="let blog of privateBlogs">
-  
+
               <div class="card">
                 <div class="card-header">
                   <section class=" card-header blog-top">
-  
+
                     <div class="pointer" (click)="userProfile(blog.creator.id)"> <img
                         style="height: 50px;width: 50px; object-fit: containng;" src="{{ blog.creator.photo }}">
                       {{ blog.creator.fullname }}</div>
-  
+
                     <div>
                       {{blog.date.substr(11,5) + " | " +  blog.date.substr(0,10)   }}
                       <br>
                       <button *ngIf="!checkFollow(blog.creator.id)" (click)="follow(blog.creator.id)"
                         class="btn btn-primary "> <i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>
                       <button *ngIf="checkFollow(blog.creator.id)" (click)="unfollow(blog.creator.id)"
-                        class="btn btn-danger "> <i class="fa fa-user-plus" aria-hidden="true"></i> UnFollow</button>
+                        class="btn btn-danger ">  <span class="badge badge-danger"> <i class="fa fa-user-times" aria-hidden="true"></i> UnFollow</span></button>
                     </div>
                   </section>
                 </div>
@@ -82,30 +114,30 @@
             </div>
           </div>
           <div>
-  
+
           </div>
         </div>
-  
-  
+
+
         <div>
           <h4>Public Blogs</h4>
           <div class="m-4" *ngFor="let blog of blogs">
-  
+
             <div class="card">
               <div class="card-header">
                 <section class=" card-header blog-top">
-  
+
                   <div class="pointer" (click)="userProfile(blog.creator.id)"><img
                       style="height: 50px;width: 50px; object-fit: containng;" src="{{ blog.creator.photo }}">
                     {{ blog.creator.fullname }}</div>
-  
+
                   <div>
                     {{blog.date.substr(11,5) + " | " +  blog.date.substr(0,10)   }}
                     <br>
                     <button *ngIf="!checkFollow(blog.creator.id)" (click)="follow(blog.creator.id)"
                       class="btn btn-primary "> <i class="fa fa-user-plus" aria-hidden="true"></i> Follow</button>
                     <button *ngIf="checkFollow(blog.creator.id)" (click)="unfollow(blog.creator.id)"
-                      class="btn btn-danger "> <i class="fa fa-user-plus" aria-hidden="true"></i> UnFollow</button>
+                      class="btn btn-danger "> <span class="badge badge-danger"> <i class="fa fa-user-times" aria-hidden="true"></i> UnFollow</span></button>
                   </div>
                 </section>
               </div>

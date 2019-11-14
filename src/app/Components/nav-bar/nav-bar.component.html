@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="router-link-active" >Blogger</a>
-  <span class="menu-btn">
+  <span class="menu-btn mr-4">
     <button *ngIf="auth.isUserLoggedIn()" class="btn btn-outline-success ml-2" [routerLink]="['/create']" routerLinkActive="router-link-active" >Create Blog</button>
     <button *ngIf="auth.isUserLoggedIn()" class="btn btn-outline-success ml-2" [routerLink]="['/profile']" routerLinkActive="router-link-active" >Profile</button>
     <button *ngIf="auth.isUserLoggedIn()" class="btn btn-outline-success ml-2" (click)="auth.logOut()">LogOut</button>

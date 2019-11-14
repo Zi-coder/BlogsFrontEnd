@@ -14,6 +14,7 @@ import { BlogDetailComponent } from './Components/blog-detail/blog-detail.compon
 import { EditProfileComponent } from './Components/edit-profile/edit-profile.component';
 import { CreateBlogComponent } from './Components/create-blog/create-blog.component';
 import { GeneralBioComponent } from './Components/general-bio/general-bio.component';
+import { EditBlogComponent } from './Components/edit-blog/edit-blog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { GeneralBioComponent } from './Components/general-bio/general-bio.compon
     BlogDetailComponent,
     EditProfileComponent,
     CreateBlogComponent,
-    GeneralBioComponent
+    GeneralBioComponent,
+    EditBlogComponent
   ],
   imports: [
     BrowserModule,
