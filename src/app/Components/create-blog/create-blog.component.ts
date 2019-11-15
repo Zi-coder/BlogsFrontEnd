@@ -20,11 +20,16 @@ export class CreateBlogComponent implements OnInit {
   ngOnInit() {
   }
   create(){
-    this.httpService.createBlog(this.blog).subscribe(
-      (resp)=>{
-        console.log(resp);
-        this.router.navigate(['/home']);
-      },(error)=>console.log(error)
-    )
+    if(this.blog.topic == "" || this.blog.category == "" || this.blog.content == ""){
+      alert("Fill All Fields");
+    }else{
+      this.httpService.createBlog(this.blog).subscribe(
+        (resp)=>{
+          alert(resp);
+          this.router.navigate(['/home']);
+        },(error)=>console.log(error)
+      )
+    }
+    
   }
 }

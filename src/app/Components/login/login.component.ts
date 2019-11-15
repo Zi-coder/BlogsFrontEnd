@@ -49,8 +49,10 @@ export class LoginComponent implements OnInit {
   
   forgotPassword(){
     var username = prompt("Enter Username/Email",'username');
-    if(username != 'username'){
+    if(username != 'username' && username != null){
       this.sendMail(username,this.otp);
+    }else{
+      alert("Cancelled");
     }
   }
   randomGen() {

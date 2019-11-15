@@ -49,13 +49,21 @@ export class ProfileComponent implements OnInit {
     )
   }
   deleteBlog(id){
-    this.http.deleteBlog(id).subscribe(
-      (resp)=>{
-        alert(resp);
-        this.ngOnInit();
-      },(error)=>console.log(error)
+    var response = prompt("Are you Sure to delete The Blog \nYes or No",'No');
+    if(response != null && response.toUpperCase() == 'YES'){
       
-    )
+      this.http.deleteBlog(id).subscribe(
+        (resp)=>{
+          alert(resp);
+          this.ngOnInit();
+        },(error)=>console.log(error)
+        
+      )
+    }
+    else{
+      alert("Stay Positive ..And Share yout thoughts Without Fear");
+    }
+    
   }
   editBlog( id ){
     this.route.navigate(['edit-blog'],{

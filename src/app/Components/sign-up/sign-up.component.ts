@@ -34,8 +34,8 @@ export class SignUpComponent implements OnInit {
       Body:"Enter the Otp " +  otp
     }
     ).then( (message) => {
-      this.verify();
-      console.log(message)});
+      this.verify();});
+      
   }
   build(){
     this.user = this.formBuilder.group({
@@ -70,8 +70,11 @@ export class SignUpComponent implements OnInit {
   }
   verify(){
     var rec = prompt("Wait for a Minute for Otp and then \nEnter OTP Recieved on Mail\nCheck spam if not found in Inbox");
+  
+    
+    
     if(rec == this.otp){
-      this.UserHttpService.register(this.user).subscribe(
+      this.UserHttpService.register(this.user.value).subscribe(
         response => {
           alert(response);
           this.auth.authenticate(this.user.value.username,this.user.value.password).subscribe(
@@ -85,6 +88,8 @@ export class SignUpComponent implements OnInit {
           alert("Username Already Exist");
         }
       );
+    }else{
+      alert("Not Accepted");
     }
   }
   randomGen() {

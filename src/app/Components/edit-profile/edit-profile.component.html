@@ -30,6 +30,7 @@
           [ngClass]="{ 'is-invalid': submitted && f.bio.errors }" />
         <div *ngIf="submitted && f.bio.errors" class="invalid-feedback">
           <div *ngIf="f.bio.errors.minlength">Min Length 10  required</div>
+          <div *ngIf="f.bio.errors.required">Nessesary Field</div>
         </div>
       </div>
       <div class="text-center">

@@ -25,7 +25,7 @@ export class EditProfileComponent implements OnInit {
           fullname:[this.user.fullname, Validators.minLength(4)],
           contact :[this.user.contact,Validators.pattern('[0-9]{10}')],
           photo :[this.user.photo],
-          bio : [this.user.bio,Validators.minLength(10)]
+          bio : [this.user.bio,[Validators.minLength(10),Validators.required]]
         })
       },(error)=>{
         alert(error);
