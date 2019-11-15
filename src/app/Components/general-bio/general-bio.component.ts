@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClientService } from 'src/app/Services/HttpClient/http-client.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-general-bio',
@@ -10,9 +10,11 @@ import { ActivatedRoute } from '@angular/router';
 export class GeneralBioComponent implements OnInit {
   user;
   blogs;
+  following;
+  followingLength;
   cFollower: any =  0;
   cFollowing: any = 0;
-  constructor(private http:HttpClientService,private route:ActivatedRoute) { }
+  constructor(private http:HttpClientService,private route:ActivatedRoute,private router: Router,private httpClient: HttpClientService) { }
 
   ngOnInit() {
     this.getUser();
@@ -36,6 +38,7 @@ export class GeneralBioComponent implements OnInit {
       (resp)=>{
         this.blogs = resp;
         this.countFollower(id);
+        this.fetchFollowing();
       
       },(error)=>console.log(error)
       
@@ -57,5 +60,40 @@ export class GeneralBioComponent implements OnInit {
         
       }
     )
+  }
+  fetchFollowing(){
+    this.httpClient.fetchFollowing().subscribe(
+      (resp)=>{
+        this.following = resp;
+        this.followingLength = this.following.length;
+        
+      },
+      (error)=>console.error(error)
+    )
+  }
+  checkFollow(id){
+
+    if(this.following){
+  
+      
+      
+      for(let i =0; i < this.followingLength ;i++){
+        if(id == this.following[i].following.id)
+        {
+          
+          return true;
+        }
+      }
+      return false;
+    }
+    
+  }
+  goToDetails(id,follow) {
+    this.router.navigate(['/blog-detail'], {
+      queryParams: {
+        id: id,
+        follow: follow 
+      }
+    });
   }
 }

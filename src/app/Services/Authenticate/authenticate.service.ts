@@ -32,4 +32,8 @@ export class AuthenticateService {
     sessionStorage.clear();
     this.router.navigate(["login"]);
   }
+  changePassword(user){
+ 
+    return this.HttpClient.post("http://localhost:8080/user/change ",user);
+  }
 }

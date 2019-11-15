@@ -1,6 +1,25 @@
 <div *ngIf="user">
   <div class="row">
     <div class="col-2">
+        <div class="m-4">
+            <section>
+                <div class="form-group">
+                  <label for="sort">Sort</label>
+                  <select class="form-control" name="sortFilter" id="sort" [(ngModel)]="sort">
+                    <option default>Select..</option>
+                    <option value="new">Newest First</option>
+                    <option value="old">Oldest First</option>
+                  </select>
+                  <button class="btn btn-primary mt-2" (click)="sortFunction()">
+                          Sort <span class="badge badge-primary">Apply</span>
+                  </button>
+                </div>
+              </section>
+              <div>
+                  <button type="button" (click)="ngOnInit()" class="btn btn-outline-danger">Clear Filters</button>
+              </div>
+        </div>
+        
       <div class="container mt-5">
         <h4>Followers</h4>
       </div>
@@ -21,7 +40,7 @@
         
         
       </div>
-
+      
     </div>
     <div class="col">
 
@@ -66,6 +85,8 @@
             </div>
             <div class="card-body details" (click)="goToDetails(blog.id,checkFollow(blog.creator.id))">
               Category: #<span style="color:darkgray;">{{ blog.category }}</span>
+              <h6> {{blog.date.substr(11,5) + " | " +  blog.date.substr(0,10)   }} </h6>
+              
               <h4 class="card-title">{{ blog.topic }}</h4>
               <p class="card-text"> {{ blog.content }} </p>
             </div>

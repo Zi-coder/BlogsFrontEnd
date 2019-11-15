@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticateService } from 'src/app/Services/Authenticate/authenticate.service';
 import { Router } from '@angular/router';
 import { HttpClientService } from 'src/app/Services/HttpClient/http-client.service';
+import { ReversePipe } from 'src/app/reverse.pipe';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { HttpClientService } from 'src/app/Services/HttpClient/http-client.servi
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private auth: AuthenticateService,private router:Router,private httpClient: HttpClientService) { }
+  constructor(private auth: AuthenticateService,private router:Router,private httpClient: HttpClientService,private rev: ReversePipe) { }
   display: Boolean = false;
   blogs;
   privateBlogs;
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
     criteria:"",
     query:""
   }
+  sort = 'new';
   users: any = false;
   ngOnInit() {
     this.users = false;
@@ -32,6 +34,16 @@ export class HomeComponent implements OnInit {
     if(!this.display){
       this.router.navigate(['/login']);
     }
+  }
+  sortFunction(){
+    if(this.sort == 'new'){
+      this.ngOnInit();
+    }
+    else if(this.sort == 'old'){
+      this.blogs = this.rev.transform(this.blogs);
+      this.privateBlogs = this.rev.transform(this.privateBlogs);
+    }
+
   }
   filter(category){
     this.empty = true;

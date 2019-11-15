@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClientService } from 'src/app/Services/HttpClient/http-client.service';
 import { Router } from '@angular/router';
+import { ReversePipe } from 'src/app/reverse.pipe';
 
 @Component({
   selector: 'app-profile',
@@ -14,12 +15,14 @@ export class ProfileComponent implements OnInit {
   followers :any = false;
   cFollower :any =  0;
   cFollowing :any = 0;
-  constructor(private http: HttpClientService,private route:Router) { }
+  sort = 'new';
+  constructor(private http: HttpClientService,private route:Router,private rev: ReversePipe) { }
   
   ngOnInit() {
     this.main();
     
   }
+
   main(){
     this.http.currentUser().subscribe(
       (resp) => {this.user = resp;
@@ -27,6 +30,16 @@ export class ProfileComponent implements OnInit {
       },(error)=>alert("Server Error")
     )
   }
+  sortFunction(){
+    if(this.sort == 'new'){
+      this.ngOnInit();
+    }
+    else if(this.sort == 'old'){
+      this.blogs = this.rev.transform(this.blogs);
+    }
+
+  }
+
   getBlogs(){
     this.http.fetchCurrentUserBlogs().subscribe(
       (resp)=>{

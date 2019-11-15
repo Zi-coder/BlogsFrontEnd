@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClientService } from "../../Services/HttpClient/http-client.service";
 import { Router } from "@angular/router";
 import { AuthenticateService } from 'src/app/Services/Authenticate/authenticate.service';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { MustMatch } from './must-watch.validator';
 declare const Email: any;
 @Component({
   selector: "app-sign-up",
@@ -9,24 +11,17 @@ declare const Email: any;
   styleUrls: ["./sign-up.component.scss"]
 })
 export class SignUpComponent implements OnInit {
-  User = {
-    fullname: "",
-    username: "",
-    password: ""
-  };
-  password1;
-  password2;
-  accept;
+  user: FormGroup;
+  submitted = false;
   otp;
-  constructor(
-    private UserHttpService: HttpClientService,
+
+  constructor(private formBuilder: FormBuilder,  private UserHttpService: HttpClientService,
     private router: Router,
-    private auth: AuthenticateService
-  ) {}
+    private auth: AuthenticateService) { }
 
   ngOnInit() {
-    this.otp = this.randomGen();
-   
+     this.build();
+     this.otp = this.randomGen();
   }
   sendMail(username,otp){
     Email.send({
@@ -42,33 +37,44 @@ export class SignUpComponent implements OnInit {
       this.verify();
       console.log(message)});
   }
-  register() {
-    if (
-      this.password1 == "" ||
-      this.password2 == "" ||
-      this.User.username == "" ||
-      this.User.fullname == ""
-    ) {
-      alert("Blank Field");
-    } else if (this.password1 != this.password2) {
-      alert("Password doesn't Match");
-    } else if (this.accept != true) {
-      alert("Accept Terms and Conditions");
-    } else {
+  build(){
+    this.user = this.formBuilder.group({
+        fullname: ['', Validators.required],
+        username: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+        acceptTerms: [false, Validators.requiredTrue]
+    }, {
+        validator: MustMatch('password', 'confirmPassword')
+    });
+  }
+  // convenience getter for easy access to form fields
+  get f() { return this.user.controls; }
+
+  onSubmit() {
+      this.submitted = true;
+
+      // stop here if form is invalid
+      if (this.user.invalid) {
+          return;
+      }
+
+      // display form values on success
+      this.sendMail(this.user.value.username,this.otp);
       
-      this.User.password = this.password1;
-      
-      this.sendMail(this.User.username,this.otp);
-      
-    }
+  }
+
+  onReset() {
+      this.submitted = false;
+      this.user.reset();
   }
   verify(){
     var rec = prompt("Wait for a Minute for Otp and then \nEnter OTP Recieved on Mail\nCheck spam if not found in Inbox");
     if(rec == this.otp){
-      this.UserHttpService.register(this.User).subscribe(
+      this.UserHttpService.register(this.user).subscribe(
         response => {
           alert(response);
-          this.auth.authenticate(this.User.username,this.User.password).subscribe(
+          this.auth.authenticate(this.user.value.username,this.user.value.password).subscribe(
             (data)=>{
               this.router.navigate(['home']);    
             }

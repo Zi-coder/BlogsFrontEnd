@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClientService } from "src/app/Services/HttpClient/http-client.service";
 import { Router } from "@angular/router";
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: "app-edit-profile",
@@ -9,46 +10,38 @@ import { Router } from "@angular/router";
 })
 export class EditProfileComponent implements OnInit {
   user: any = false;
-  p = ["", ""];
-  username = "";
-  password = "";
-  constructor(private http: HttpClientService, private router: Router) {}
+  userForm : FormGroup;
+  submitted = false;
+  constructor(private formBuilder: FormBuilder,private http: HttpClientService, private router: Router) {}
 
   ngOnInit() {
     this.http.currentUser().subscribe(
       resp => {
         this.user = resp;
-        this.username = this.user.username;
-        this.p[0] = this.user.password;
-        this.p[1] = this.user.password;
+        this.userForm = this.formBuilder.group({
+          id:[this.user.id],
+          password:[this.user.password],
+          username:[this.user.username],
+          fullname:[this.user.fullname, Validators.minLength(4)],
+          contact :[this.user.contact,Validators.pattern('[0-9]{10}')],
+          photo :[this.user.photo],
+          bio : [this.user.bio,Validators.minLength(10)]
+        })
+      },(error)=>{
+        alert(error);
       }
       //(error) => console.log(error)
     );
   }
+  get f() { return this.userForm.controls; }
   register() {
-    if (this.p[0] != this.p[1]) {
-      alert("Password MisMatch");
-    } else {
-      this.password = this.p[1];
-    }
-    if (
-      this.user.username != this.username ||
-      this.password != this.user.password
-    ) {
-      //logout
-      this.user.password = this.password;
-
-      this.http.editUserDetails(this.user).subscribe(
-        resp => {
-          console.log(resp);
-          this.router.navigate(["login"]);
-        },
-        error => console.error(error)
-      );
-    } else {
       //profile
-
-      this.http.editUserDetails(this.user).subscribe(
+      this.submitted = true;
+      if (this.userForm.invalid) {
+        return;
+      }
+     
+      this.http.editUserDetails(this.userForm.value).subscribe(
         resp => {
           console.log(resp);
           this.router.navigate(["profile"]);
@@ -56,10 +49,8 @@ export class EditProfileComponent implements OnInit {
         error => console.error(error)
       );
     }
-
-    // this.http.editUserDetails(this.user).subscribe(
-    //   (resp)=>console.log(resp),(error)=>console.error(error)
-    // );
-    //  this.router.navigate(['profile']);
+    onReset() {
+      this.submitted = false;
+      this.userForm.reset();
   }
 }
